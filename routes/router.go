@@ -7,9 +7,45 @@
  */
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"ginblog/utils"
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+//func InitRouter() (engine *gin.Engine){
+//	gin.SetMode(utils.AppMode)
+//	r := gin.Default()  // 默认加两个中间件
+//	router := r.Group("api/v1")
+//	{
+//		router.GET("Hello", func(context *gin.Context) {
+//			context.JSON(http.StatusOK, gin.H{
+//				"msg" :"ok",
+//			})
+//		})
+//	}
+//
+//	return
+//}
+
+// 如何剥离出func
 
 func InitRouter(){
-	gin.SetMode()
+	gin.SetMode(utils.AppMode)
+	r := gin.Default()  // 默认加两个中间件
+	router := r.Group("api/v1")
+	{
+		//路由组
+		router.GET("Hello", func(context *gin.Context) {
+			context.JSON(http.StatusOK,gin.H{
+				"msg" :"ppppp",
+			})
+		})
 
+
+	}
+
+	r.Run(utils.HttpPort)
 }
+
+
