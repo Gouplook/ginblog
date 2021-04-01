@@ -8,6 +8,7 @@
 package routes
 
 import (
+	v1 "ginblog/api/v1"
 	"ginblog/utils"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -41,6 +42,17 @@ func InitRouter(){
 				"msg" :"ppppp",
 			})
 		})
+
+		// user v1 是API中v1文件的包名
+		router.POST("user/add", v1.AddUser)
+		router.GET("uses", v1.GetUsers)
+		router.GET("user/exist", v1.UserExist)
+		router.POST("edit", v1.EditUser)
+		router.POST("dele",v1.DeleteUser)
+
+		// atricle
+
+		// category
 
 
 	}
