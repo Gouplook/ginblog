@@ -21,6 +21,7 @@ type User struct {
 
 //新增用户
 func CreateUser(data *User) (code int) {
+	// 插入用户
 	err := db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR
@@ -31,19 +32,19 @@ func CreateUser(data *User) (code int) {
 //查询用户是否存在
 func CheckUser(username string) int {
 	var users User
-	db.Select("id").Where("username = ?").First(&users)
-	if users.ID > 0{
+	db.Select("id").Where("username=?",username).First(&users)
+	// 用户名已经存在
+	if users.ID > 0 {
 		return errmsg.ERR_USERNAME_USER
 	}
 	return  errmsg.SUCCESS
-
-
 }
-
+// pageNum 当前页数
+// pageSize 页的条数
 func GetUsers(pageSize int, pageNum int )[]User{
 	var users []User
 	err := db.Limit(pageSize).Offset((pageNum-1)*pageSize).Find(&users).Error
-	if err != nil {
+	if err != nil && gorm.ErrRecordNotFound != nil {
 		return nil
 	}
 	return users
