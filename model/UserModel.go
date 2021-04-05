@@ -1,15 +1,18 @@
 /**
  * @Author: Yinjinlin
  * @Description:
- * @File:  User.go
+ * @File:  UserModel.go
  * @Version: 1.0.0
  * @Date: 2021/4/1 7:46
  */
 package model
 
 import (
+	"encoding/base64"
 	"ginblog/utils/errmsg"
+	"golang.org/x/crypto/scrypt"
 	"gorm.io/gorm"
+	"log"
 )
 
 type User struct {
@@ -21,6 +24,7 @@ type User struct {
 
 //新增用户
 func CreateUser(data *User) (code int) {
+	data.Password = ScryptPassWord(data.Password)
 	// 插入用户
 	err := db.Create(&data).Error
 	if err != nil {
@@ -51,3 +55,20 @@ func GetUsers(pageSize int, pageNum int )[]User{
 }
 //
 //删除用户
+
+
+//
+func ScryptPassWord(passWord string) string{
+
+	//dk, err := scrypt.Key([]byte("some password"), salt, 32768, 8, 1, 32)
+	salt := []byte{1,2,3,4,5,6,7,8}
+	dk,err := scrypt.Key([]byte(passWord),salt,64,8,1,32)
+	if err != nil {
+		log.Fatal(err)
+	}
+	passWord = base64.StdEncoding.EncodeToString(dk)
+	return passWord
+
+	// UXcdKQmXB2urqQ9yoYFt4Q2Lxz0v8i4eBelK9SqWQlU=
+}
+

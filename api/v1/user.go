@@ -44,10 +44,10 @@ func AddUser(c *gin.Context){
 }
 // 查询单个用户
 
-type Page struct {
-	pageSize int `json:"page_size"`
-	pageNum  int `json:"page_num"`
-}
+//type Page struct {
+//	pageSize int `json:"page_size"`
+//	pageNum  int `json:"page_num"`
+//}
 
 
 // 查询用户列表

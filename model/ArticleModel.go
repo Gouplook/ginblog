@@ -1,7 +1,7 @@
 /**
  * @Author: Yinjinlin
  * @Description:
- * @File:  Article.go
+ * @File:  ArticleModel.go
  * @Version: 1.0.0
  * @Date: 2021/4/1 7:46
  */
