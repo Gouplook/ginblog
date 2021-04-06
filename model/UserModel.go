@@ -55,11 +55,20 @@ func GetUsers(pageSize int, pageNum int )[]User{
 }
 //
 //删除用户
+func DeleteUser(id int) int {
+	err = db.Where("id",id).Delete(&User{}).Error
+	if err != nil {
+		return errmsg.ERR_USERNAME_USER
+	}
+	return  id
+}
 
 
+//func (u *User)BeforeSave(){
+//	u.Password = ScryptPassWord(u.Password)
+//}
 //
 func ScryptPassWord(passWord string) string{
-
 	//dk, err := scrypt.Key([]byte("some password"), salt, 32768, 8, 1, 32)
 	salt := []byte{1,2,3,4,5,6,7,8}
 	dk,err := scrypt.Key([]byte(passWord),salt,64,8,1,32)
@@ -68,7 +77,5 @@ func ScryptPassWord(passWord string) string{
 	}
 	passWord = base64.StdEncoding.EncodeToString(dk)
 	return passWord
-
-	// UXcdKQmXB2urqQ9yoYFt4Q2Lxz0v8i4eBelK9SqWQlU=
 }
 

@@ -48,7 +48,7 @@ func InitRouter(){
 		router.GET("uses", v1.GetUsers)
 		router.GET("user/exist", v1.UserExist)
 		router.POST("edit", v1.EditUser)
-		router.POST("dele",v1.DeleteUser)
+		router.DELETE("dele",v1.DeleteUser)
 
 		// atricle
 

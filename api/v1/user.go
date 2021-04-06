@@ -82,7 +82,11 @@ func EditUser(c *gin.Context){
 }
 // 删除用户
 func DeleteUser(c *gin.Context){
-
+	id ,_ := strconv.Atoi(c.Param("id"))
+	id = model.DeleteUser(id)
+	if id < 0{
+		return
+	}
 }
 
 
