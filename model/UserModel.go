@@ -53,17 +53,30 @@ func GetUsers(pageSize int, pageNum int )[]User{
 	}
 	return users
 }
-//
+//编辑用户
+func EditUsers( id int, data *User) int {
+	var maps = make(map[string]interface{})
+	maps["username"] = data.Username
+	maps["role"] = data.Role
+
+	err = db.Where("id=?", id).Model(&User{}).Update(maps).Error
+	if err != nil {
+		return errmsg.ERROR
+	}
+	return  errmsg.SUCCESS
+}
+
 //删除用户
 func DeleteUser(id int) int {
-	err = db.Where("id",id).Delete(&User{}).Error
+	err = db.Where("id=?",id).Delete(&User{}).Error
 	if err != nil {
-		return errmsg.ERR_USERNAME_USER
+		return errmsg.ERROR
 	}
-	return  id
+	return  errmsg.SUCCESS
 }
 
 
+// 钩子函数
 //func (u *User)BeforeSave(){
 //	u.Password = ScryptPassWord(u.Password)
 //}

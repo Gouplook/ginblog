@@ -11,6 +11,7 @@ import (
 	"ginblog/model"
 	"ginblog/utils/errmsg"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -42,13 +43,6 @@ func AddUser(c *gin.Context){
 		"message":errmsg.GetErrMsg(code),
 	})
 }
-// 查询单个用户
-
-//type Page struct {
-//	pageSize int `json:"page_size"`
-//	pageNum  int `json:"page_num"`
-//}
-
 
 // 查询用户列表
 func GetUsers(c *gin.Context){
@@ -63,12 +57,6 @@ func GetUsers(c *gin.Context){
 	}
 
 	data := model.GetUsers(pageSize,pageNum)
-
-	// 此类型不行
-	//var pag Page
-	////_ = c.ShouldBindJSON(&pag)
-	//data := model.GetUsers(pag.pageSize,pag.pageNum)
-
 	c.JSON(http.StatusOK,gin.H{
 		"status": errmsg.SUCCESS,
 		"data":data,
@@ -78,15 +66,31 @@ func GetUsers(c *gin.Context){
 }
 // 编辑用户
 func EditUser(c *gin.Context){
+	id,_ := strconv.Atoi(c.Param("id"))
+	var data model.User
+	_ = c.ShouldBindJSON(&data)
+	//检查输入的用户是否存在
+	code := model.CheckUser(data.Username)
+	if code == errmsg.ERR_USERNAME_USER {
+		log.Fatal("用户名已存在")
+	}
+	code = model.EditUsers(id, &data)
 
+	c.JSON(http.StatusOK,gin.H{
+		"status" :code,
+		"data" :data,
+		"message": errmsg.GetErrMsg(code),
+	})
 }
 // 删除用户
 func DeleteUser(c *gin.Context){
 	id ,_ := strconv.Atoi(c.Param("id"))
-	id = model.DeleteUser(id)
-	if id < 0{
-		return
-	}
+	code := model.DeleteUser(id)
+
+	c.JSON(http.StatusOK,gin.H{
+		"status" :code,
+		"message" :errmsg.GetErrMsg(code),
+	})
 }
 
 

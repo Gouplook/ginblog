@@ -46,9 +46,8 @@ func InitRouter(){
 		// user v1 是API中v1文件的包名
 		router.POST("user/add", v1.AddUser)
 		router.GET("uses", v1.GetUsers)
-		router.GET("user/exist", v1.UserExist)
-		router.POST("edit", v1.EditUser)
-		router.DELETE("dele",v1.DeleteUser)
+		router.PUT("user/:id", v1.EditUser)
+		router.DELETE("dele/:id",v1.DeleteUser)
 
 		// atricle
 
