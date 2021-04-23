@@ -30,7 +30,6 @@ import (
 //}
 
 // 如何剥离出func
-
 func InitRouter(){
 	gin.SetMode(utils.AppMode)
 	r := gin.Default()  // 默认加两个中间件
