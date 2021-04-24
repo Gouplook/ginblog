@@ -29,6 +29,6 @@ func InitDb (){
 	}
 	//defer db.Close()
 
-	// Migrate the schema
+	// Migrate the schema 初始化数据库model
 	db.AutoMigrate(&Article{},&Category{},&User{})
 }
