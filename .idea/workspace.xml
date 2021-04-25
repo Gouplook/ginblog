@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7762c3c6-974e-4277-ba23-2786a68b90e9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/v1/category.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/v1/category.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/CategoryModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/CategoryModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/routes/router.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +18,12 @@
   </component>
   <component name="GOROOT" path="D:\Gosdk" />
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1qXl5K3C4ozn4wUzwTpPqo7DkkE" />
@@ -104,17 +107,29 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1864" height="235" key="GridCell.Tab.1.right/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619353226352" />
+    <state x="2356" y="208" key="IDE.errors.dialog" timestamp="1619355455734">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2356" y="208" key="IDE.errors.dialog/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619355455734" />
     <state x="2255" y="80" key="SettingsEditor" timestamp="1619265398895">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2255" y="80" key="SettingsEditor/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619265398895" />
+    <state x="2371" y="186" key="Vcs.Push.Dialog.v2" timestamp="1619356000738">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2371" y="186" key="Vcs.Push.Dialog.v2/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619356000738" />
+    <state x="2637" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1619355484299">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2637" y="432" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619355484299" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/model/CategoryModel.go</url>
-          <line>56</line>
+          <line>64</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
