@@ -15,12 +15,12 @@ import (
 	"strconv"
 )
 
-//查询分类是否存在
+// 查询分类是否存在
 
 // 查询单个分类下的文章
 
 
-// 添加文章
+// 添加分类
 func AddCate(c *gin.Context) {
 	// todo
 	var data model.Category
@@ -28,8 +28,8 @@ func AddCate(c *gin.Context) {
 
 	code := model.CreateCate(&data)
 
-	if code == errmsg.ERR_USERNAME_USER {
-		code = errmsg.ERR_USERNAME_USER
+	if code == errmsg.ERROR_USERNAME_USED {
+		code = errmsg.ERROR_USERNAME_USED
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -39,8 +39,22 @@ func AddCate(c *gin.Context) {
 	})
 }
 
+//查询单个分类
+func GetInfo(c *gin.Context){
+	id,_ := strconv.Atoi(c.Param("id"))
+	var data model.Category
+	var code int
+	_ = c.ShouldBindJSON(&data)
+	data, code = model.FindInfo(id)
+	c.JSON(http.StatusOK,gin.H{
+		"status":  code,
+		"data":    data,
+		"message": errmsg.GetErrMsg(errmsg.SUCCSE),
+	})
+}
+
 // 查询分类列表
-func GetCates(c *gin.Context) {
+func GetList(c *gin.Context) {
 	// 列表涉及到分页
 	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
 	pageNum, _ := strconv.Atoi(c.Query("pageNum"))
@@ -53,9 +67,9 @@ func GetCates(c *gin.Context) {
 
 	data := model.GetCateLists(pageSize, pageNum)
 	c.JSON(http.StatusOK, gin.H{
-		"status":  errmsg.SUCCESS,
+		"status":  errmsg.SUCCSE,
 		"data":    data,
-		"message": errmsg.GetErrMsg(errmsg.SUCCESS),
+		"message": errmsg.GetErrMsg(errmsg.SUCCSE),
 	})
 
 }

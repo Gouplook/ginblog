@@ -30,8 +30,8 @@ func AddArt(c *gin.Context) {
 	// 插入数据
 	code := model.CreateArt(&data)
 
-	if code == errmsg.ERR_USERNAME_USER {
-		code = errmsg.ERR_USERNAME_USER
+	if code == errmsg.ERROR_USERNAME_USED {
+		code = errmsg.ERROR_USERNAME_USED
 	}
 
 	c.JSON(http.StatusOK, gin.H{
@@ -55,9 +55,9 @@ func GetArts(c *gin.Context) {
 
 	data := model.GetArt(pageSize, pageNum)
 	c.JSON(http.StatusOK, gin.H{
-		"status":  errmsg.SUCCESS,
+		"status":  errmsg.SUCCSE,
 		"data":    data,
-		"message": errmsg.GetErrMsg(errmsg.SUCCESS),
+		"message": errmsg.GetErrMsg(errmsg.SUCCSE),
 	})
 
 }

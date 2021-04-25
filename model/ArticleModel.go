@@ -29,7 +29,7 @@ func CreateArt(data *Article) (code int) {
 	if err != nil {
 		return errmsg.ERROR
 	}
-	return errmsg.SUCCESS
+	return errmsg.SUCCSE
 }
 
 // 获取文章列表
@@ -57,7 +57,7 @@ func EditArt(id int, data *Article) int {
 	if err != nil {
 		return errmsg.ERROR
 	}
-	return errmsg.SUCCESS
+	return errmsg.SUCCSE
 }
 
 //删除文章
@@ -66,5 +66,5 @@ func DeleteArt(id int) int {
 	if err != nil {
 		return errmsg.ERROR
 	}
-	return errmsg.SUCCESS
+	return errmsg.SUCCSE
 }

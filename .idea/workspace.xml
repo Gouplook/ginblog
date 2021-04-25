@@ -3,12 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7762c3c6-974e-4277-ba23-2786a68b90e9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/v1/article.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/v1/article.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/v1/category.go" beforeDir="false" afterPath="$PROJECT_DIR$/api/v1/category.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/ArticleModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/ArticleModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/CategoryModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/CategoryModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/UserModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/UserModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/db.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/db.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/routes/router.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,19 +72,57 @@
     </environment>
   </component>
   <component name="WindowStateProjectService">
+    <state width="1864" height="235" key="GridCell.Tab.0.bottom" timestamp="1619353226351">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1864" height="235" key="GridCell.Tab.0.bottom/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619353226351" />
+    <state width="1864" height="235" key="GridCell.Tab.0.center" timestamp="1619353226351">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1864" height="235" key="GridCell.Tab.0.center/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619353226351" />
+    <state width="1864" height="235" key="GridCell.Tab.0.left" timestamp="1619353226351">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1864" height="235" key="GridCell.Tab.0.left/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619353226351" />
+    <state width="1864" height="235" key="GridCell.Tab.0.right" timestamp="1619353226351">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1864" height="235" key="GridCell.Tab.0.right/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619353226351" />
+    <state width="1864" height="235" key="GridCell.Tab.1.bottom" timestamp="1619353226352">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1864" height="235" key="GridCell.Tab.1.bottom/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619353226352" />
+    <state width="1864" height="235" key="GridCell.Tab.1.center" timestamp="1619353226352">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1864" height="235" key="GridCell.Tab.1.center/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619353226352" />
+    <state width="1864" height="235" key="GridCell.Tab.1.left" timestamp="1619353226351">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1864" height="235" key="GridCell.Tab.1.left/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619353226351" />
+    <state width="1864" height="235" key="GridCell.Tab.1.right" timestamp="1619353226352">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1864" height="235" key="GridCell.Tab.1.right/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619353226352" />
     <state x="2255" y="80" key="SettingsEditor" timestamp="1619265398895">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2255" y="80" key="SettingsEditor/0.0.1920.1032/1920.0.1920.1080@1920.0.1920.1080" timestamp="1619265398895" />
   </component>
   <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="GoApplicationRunConfiguration">
-        <watch expression="HttpPort" language="go" />
-        <watch expression="Db" language="go" />
-        <watch expression="DbUser" language="go" />
-        <watch expression="err" language="go" />
-      </configuration>
-    </watches-manager>
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/model/CategoryModel.go</url>
+          <line>56</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/api/v1/article.go</url>
+          <line>44</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

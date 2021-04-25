@@ -27,8 +27,12 @@ func InitDb (){
 	if err != nil {
 		panic("failed to connect database")
 	}
-	//defer db.Close()
+
+
+
 
 	// Migrate the schema 初始化数据库model
 	db.AutoMigrate(&Article{},&Category{},&User{})
+
+
 }

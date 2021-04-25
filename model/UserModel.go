@@ -29,9 +29,9 @@ func CheckUser(username string) int {
 	db.Select("id").Where("username=?",username).First(&users)
 	// 用户名已经存在
 	if users.ID > 0 {
-		return errmsg.ERR_USERNAME_USER
+		return errmsg.ERROR_USERNAME_USED
 	}
-	return  errmsg.SUCCESS
+	return  errmsg.SUCCSE
 }
 
 //新增用户
@@ -43,7 +43,7 @@ func CreateUser(data *User) (code int) {
 	if err != nil {
 		return errmsg.ERROR
 	}
-	return errmsg.SUCCESS
+	return errmsg.SUCCSE
 }
 
 // 获取用户列表
@@ -67,7 +67,7 @@ func EditUsers( id int, data *User) int {
 	if err != nil {
 		return errmsg.ERROR
 	}
-	return  errmsg.SUCCESS
+	return  errmsg.SUCCSE
 }
 
 //删除用户
@@ -76,7 +76,7 @@ func DeleteUser(id int) int {
 	if err != nil {
 		return errmsg.ERROR
 	}
-	return  errmsg.SUCCESS
+	return  errmsg.SUCCSE
 }
 
 

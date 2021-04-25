@@ -17,9 +17,17 @@ type Category struct {
 	Name string `gorm:"type: varchar(20);not null" json:"name"`
 }
 
-//查询分类是否存在
 
-// 查询单个分类下的文章
+// CheckCategory 查询分类是否存在
+func CheckCategory(name string)(code int ){
+	var cate Category
+	err = db.Select("id").Where("name",name).First(&cate).Error
+	if cate.ID > 0 {
+		return errmsg.ERROR_CATENAME_USED
+	}
+	return errmsg.ERROR_CATENAME_USED
+}
+
 
 //新增分类
 func CreateCate(data *Category) (code int) {
@@ -28,17 +36,17 @@ func CreateCate(data *Category) (code int) {
 	if err != nil {
 		return errmsg.ERROR
 	}
-	return errmsg.SUCCESS
+	return errmsg.SUCCSE
 }
 
 // 获取分类详情
 func FindInfo(id int ) (Category, int ) {
 	var cate Category
-	err := db.Limit(1).Where("ID=?",id).Find(&cate).Error
+	err := db.Limit(1).Where("ID=?",id).First(&cate).Error
 	if err != nil {
 		return cate,errmsg.ERROR
 	}
-	return cate,errmsg.SUCCESS
+	return cate,errmsg.SUCCSE
 }
 
 // 获取分类列表
@@ -62,7 +70,7 @@ func EditCate(id int, data *Category) int {
 	if err != nil {
 		return errmsg.ERROR
 	}
-	return errmsg.SUCCESS
+	return errmsg.SUCCSE
 }
 
 //删除分类
@@ -71,6 +79,6 @@ func DeleteCate(id int) int {
 	if err != nil {
 		return errmsg.ERROR
 	}
-	return errmsg.SUCCESS
+	return errmsg.SUCCSE
 }
 
