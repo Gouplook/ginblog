@@ -29,12 +29,12 @@ func AddUser(c *gin.Context){
 	// 添加用户之前，需要查找用户是否存在
 	code :=  model.CheckUser(data.Username)
 	// 用户已经存在
-	if code == errmsg.SUCCESS {
+	if code == errmsg.SUCCSE {
 		// 插入数据
 		model.CreateUser(&data)
 	}
-	if code == errmsg.ERR_USERNAME_USER{
-		code = errmsg.ERR_USERNAME_USER
+	if code == errmsg.ERROR_USERNAME_USED{
+		code = errmsg.ERROR_USERNAME_USED
 	}
 
 	c.JSON(http.StatusOK,gin.H{
@@ -58,9 +58,9 @@ func GetUsers(c *gin.Context){
 
 	data := model.GetUsers(pageSize,pageNum)
 	c.JSON(http.StatusOK,gin.H{
-		"status": errmsg.SUCCESS,
+		"status": errmsg.SUCCSE,
 		"data":data,
-		"message":errmsg.GetErrMsg(errmsg.SUCCESS),
+		"message":errmsg.GetErrMsg(errmsg.SUCCSE),
 	})
 
 }
@@ -71,7 +71,7 @@ func EditUser(c *gin.Context){
 	_ = c.ShouldBindJSON(&data)
 	//检查输入的用户是否存在
 	code := model.CheckUser(data.Username)
-	if code == errmsg.ERR_USERNAME_USER {
+	if code == errmsg.ERROR_USERNAME_USED {
 		log.Fatal("用户名已存在")
 	}
 	code = model.EditUsers(id, &data)

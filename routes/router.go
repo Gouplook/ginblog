@@ -33,6 +33,7 @@ import (
 func InitRouter(){
 	gin.SetMode(utils.AppMode)
 	r := gin.Default()  // 默认加两个中间件
+
 	router := r.Group("api/v1")
 	{
 		//路由组
@@ -49,9 +50,17 @@ func InitRouter(){
 		router.DELETE("dele/:id",v1.DeleteUser)
 
 		// atricle
+		router.POST("art/add", v1.AddArt)
+		router.GET("art/get", v1.GetArts)
+		router.PUT("art/edit:id", v1.EditCate)
+		router.DELETE("art/dele:id",v1.DeleteArt)
 
 		// category
-
+		router.POST("cate/add", v1.AddCate)
+		router.GET("cate", v1.GetList)
+		router.GET("cateinfo", v1.GetInfo)  // 获取分类详情
+		router.PUT("cate/edit/:id", v1.EditCate)
+		router.DELETE("cate/dele/:id",v1.DeleteCate)
 
 	}
 
