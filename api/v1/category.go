@@ -15,14 +15,10 @@ import (
 	"strconv"
 )
 
-// 查询分类是否存在
-
-// 查询单个分类下的文章
 
 
 // 添加分类
 func AddCate(c *gin.Context) {
-	// todo
 	var data model.Category
 	_ = c.ShouldBindJSON(&data) // json 格式绑定
 
@@ -71,7 +67,6 @@ func GetList(c *gin.Context) {
 		"data":    data,
 		"message": errmsg.GetErrMsg(errmsg.SUCCSE),
 	})
-
 }
 
 // 编辑分类

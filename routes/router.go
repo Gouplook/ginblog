@@ -51,14 +51,15 @@ func InitRouter(){
 
 		// atricle
 		router.POST("art/add", v1.AddArt)
-		router.GET("art/get", v1.GetArts)
-		router.PUT("art/edit:id", v1.EditCate)
+		router.GET("art/getList", v1.GetArtslist)  // 获取文章列表
+		router.GET("art/getInfo/:id", v1.GetArtInfo) // 获取文章详情
+		router.PUT("art/edit/:id", v1.EditArt)
 		router.DELETE("art/dele:id",v1.DeleteArt)
 
 		// category
 		router.POST("cate/add", v1.AddCate)
 		router.GET("cate", v1.GetList)
-		router.GET("cateinfo", v1.GetInfo)  // 获取分类详情
+		router.GET("cateinfo/:id", v1.GetInfo)  // 获取分类详情
 		router.PUT("cate/edit/:id", v1.EditCate)
 		router.DELETE("cate/dele/:id",v1.DeleteCate)
 

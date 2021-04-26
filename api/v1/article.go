@@ -16,14 +16,26 @@ import (
 )
 
 // 查询单个文章
-func Find(c *gin.Context) {
+func GetArtInfo(c *gin.Context) {
+	var data model.Article
+	var code int
+	id,_ := strconv.Atoi(c.Param("id"))
+	_ = c.ShouldBindJSON(&data)
+	data ,code = model.GetArtInfo(id)
+	if code == errmsg.SUCCSE {
+		code = errmsg.SUCCSE
+	}
+	c.JSON(http.StatusOK,gin.H{
+		"status" :code,
+		"data": data,
+		"message":errmsg.GetErrMsg(code),
+	})
 
 }
 
 
 // 添加文章
 func AddArt(c *gin.Context) {
-	// todo
 	var data model.Article
 	_ = c.ShouldBindJSON(&data) // json 格式绑定
 	
@@ -42,7 +54,7 @@ func AddArt(c *gin.Context) {
 }
 
 // 查询文章列表
-func GetArts(c *gin.Context) {
+func GetArtslist(c *gin.Context) {
 	// 列表涉及到分页
 	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
 	pageNum, _ := strconv.Atoi(c.Query("pageNum"))
@@ -53,8 +65,9 @@ func GetArts(c *gin.Context) {
 		pageNum = -1
 	}
 
-	data := model.GetArt(pageSize, pageNum)
+	data,total := model.GetArtList(pageSize, pageNum)
 	c.JSON(http.StatusOK, gin.H{
+		"total" :total,
 		"status":  errmsg.SUCCSE,
 		"data":    data,
 		"message": errmsg.GetErrMsg(errmsg.SUCCSE),
