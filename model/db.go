@@ -10,8 +10,11 @@ package model
 import (
 	"fmt"
 	"ginblog/utils"
-	"github.com/jinzhu/gorm"
-	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
+	"os"
+
 	"time"
 )
 
@@ -22,19 +25,33 @@ var err error
 func InitDb (){
 	// 链接数据库
 	// "user:password@/dbname?charset=utf8&parseTime=True&loc=Local"
-	sql := fmt.Sprintf("%s:%s@/%s?charset=utf8&parseTime=True&loc=Local", utils.DbUser,utils.DbPassWord,utils.DbName)
-	db, err = gorm.Open(utils.Db, sql)
+	sql := fmt.Sprintf("%s:%s@(127.0.0.1:3306)/%s?charset=utf8&parseTime=True&loc=Local",
+		utils.DbUser,
+		utils.DbPassWord,
+		utils.DbName)
+
+	db, err = gorm.Open(mysql.Open(sql),&gorm.Config{
+		// gorm日志模式：silent
+
+		//外键约束
+		DisableForeignKeyConstraintWhenMigrating: true,
+		//禁用默认事务（提高运行速度）
+		SkipDefaultTransaction: true,
+		NamingStrategy: schema.NamingStrategy{
+			// 使用单数表名，启用该选项，此时，`User` 的表名应该是 `user`
+			SingularTable: true,
+		},
+	})
+
 	if err != nil {
-		panic("failed to connect database")
+		fmt.Println("连接数据库失败，请检查参数：", err)
+		os.Exit(1)
 	}
 
+	// 迁移数据表，在没有数据表结构变更时候，建议注释不执行
+	_ = db.AutoMigrate(&Article{},&Category{},&User{})
 
-
-
-	// Migrate the schema 初始化数据库model
-	db.AutoMigrate(&Article{},&Category{},&User{})
-
-	sqlDB := db.DB()
+	sqlDB,_ := db.DB()
 
 	// SetMaxIdleCons 设置连接池中的最大闲置连接数。
 	sqlDB.SetMaxIdleConns(10)

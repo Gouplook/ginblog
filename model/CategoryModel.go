@@ -66,7 +66,7 @@ func EditCate(id int, data *Category) int {
 	var maps = make(map[string]interface{})
 	maps["name"] = data.Name
 
-	err = db.Where("id=?", id).Model(&Category{}).Update(maps).Error
+	err = db.Where("id=?", id).Model(&Category{}).Updates(maps).Error
 	if err != nil {
 		return errmsg.ERROR
 	}

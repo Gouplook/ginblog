@@ -18,7 +18,7 @@ import (
 type User struct {
 	gorm.Model
 	Username string `gorm:"type:varchar(20)" json:"username"`
-	Password string `gorm:"type:varchar(20)" json:"password"`
+	Password string `gorm:"type:varchar(64)" json:"password"`
 	Role     int    `gorm:"type:int" json:"role"` 			// 0= 管理员
 }
 
@@ -63,7 +63,7 @@ func EditUsers( id int, data *User) int {
 	maps["username"] = data.Username
 	maps["role"] = data.Role
 
-	err = db.Where("id=?", id).Model(&User{}).Update(maps).Error
+	err = db.Where("id=?", id).Model(&User{}).Updates(maps).Error
 	if err != nil {
 		return errmsg.ERROR
 	}

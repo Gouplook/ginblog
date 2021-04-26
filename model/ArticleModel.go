@@ -13,7 +13,7 @@ import (
 )
 
 type Article struct {
-	Category Category
+	Category Category `gorm:"foreignkey:Cid"` // 添加外键
 	gorm.Model
 	Title   string `gorm:"type:varchar(100)"json:"title"`
 	Cid     int    `gorm:"type:int;not null" json:"cid"`
@@ -53,7 +53,7 @@ func EditArt(id int, data *Article) int {
 	maps["content"] = data.Content
 	maps["img"] = data.Img
 
-	err = db.Where("id=?", id).Model(&Article{}).Update(maps).Error
+	err = db.Where("id=?", id).Model(&Article{}).Updates(maps).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
