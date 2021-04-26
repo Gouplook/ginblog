@@ -40,7 +40,7 @@ func LoadServer(file *ini.File) {
 	HttpPort = file.Section("server").Key("HttpPort").MustString(":10086")
 
 }
-
+// 读取数据库配置文件
 func LoadData(file *ini.File) {
 	Db = file.Section("database").Key("Db").MustString("mysql")
 	DbUser = file.Section("database").Key("DbUser").MustString("root")
