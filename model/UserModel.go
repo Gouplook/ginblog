@@ -51,7 +51,7 @@ func CreateUser(data *User) (code int) {
 // pageSize 页的条数
 func GetUsers(pageSize int, pageNum int )[]User{
 	var users []User
-	err := db.Limit(pageSize).Offset((pageNum-1)*pageSize).Find(&users).Error
+	err = db.Limit(pageSize).Offset((pageNum-1)*pageSize).Find(&users).Error
 	if err != nil && gorm.ErrRecordNotFound != nil {
 		return nil
 	}

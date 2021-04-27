@@ -54,13 +54,14 @@ func GetArtInfo(id int)(Article, int) {
 func GetArtList(pageSize int, pageNum int)([]Article, int64 ) {
 	var artLists []Article
 	var total int64
-	//err = db.Model(&Article{}).Select("*").Limit(pageSize).Offset((pageNum -1)*pageSize).Order("Created_At DESC ").Joins("left join Category on Article.cid = Category.id").Find(&artLists).Error
-	err = db.Select("article.id, title, img, created_at, updated_at, `decs`, comment_count, read_num, category.name").Limit(pageSize).Offset((pageNum - 1) * pageSize).Order("Created_At DESC").Joins("Category").Find(&artLists).Error
+	err = db.Select("article.id, title, img, created_at, updated_at, decs , comment_count, read_num, category.name").
+		Limit(pageSize).Offset((pageNum - 1) * pageSize).Order("Created_At DESC").
+		Joins("Category").Find(&artLists).Error
 	if err != nil && gorm.ErrRecordNotFound != nil {
 		return nil,0
 	}
 	// 单独进行计数
-	//db.Table("Article").Count(&total)
+	db.Table("Article").Count(&total)
 
 	return artLists,total
 }
