@@ -27,7 +27,7 @@ type Article struct {
 //新增文章
 func CreateArt(data *Article) (code int) {
 	// 插入文章
-	err := db.Create(&data).Error
+	err := db.Create(data).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
@@ -108,4 +108,22 @@ func DeleteArt(id int) int {
 		return errmsg.ERROR
 	}
 	return errmsg.SUCCSE
+}
+
+// SearchArticle 搜索文章标题
+func SearchArticle(title string, pageSize, pageNum int) ([]Article, int64) {
+	var artLists []Article
+	var total int64
+
+	err = db.Select("*").Limit(pageSize).Offset((pageNum-1)*pageSize).
+		Order("created_at DESC").Where("LIKE title ?", title+"%").
+		Find(&artLists).Error
+
+	// 统计数量
+	db.Where("LIKE ? ", title+"%").Count(&total)
+	if err != nil && gorm.ErrRecordNotFound != nil {
+		return artLists, 0
+	}
+
+	return artLists, total
 }
