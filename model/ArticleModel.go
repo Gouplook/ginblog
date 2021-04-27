@@ -55,6 +55,7 @@ func GetArtInfo(id int) (Article, int) {
 func GetArtList(pageSize int, pageNum int) ([]Article, int64) {
 	var artLists []Article
 	var total int64
+	// 查询时可以选择字段，类似select 中的字段
 	err = db.Select("article.id, title, img, created_at, updated_at, decs , comment_count, read_num, category.name").
 		Limit(pageSize).Offset((pageNum - 1) * pageSize).Order("Created_At DESC").
 		Joins("Category").Find(&artLists).Error
@@ -71,7 +72,6 @@ func GetArtList(pageSize int, pageNum int) ([]Article, int64) {
 func GetArtByCidLists(cid int, pageSize int, pageNum int) ([]Article, int, int64) {
 	var artlists []Article
 	var total int64
-	//artlists := make([]Article, 0)
 	// 偏移量计算
 	err = db.Select("*").Where("cid = ? ", cid).
 		Limit(pageSize).Offset((pageNum - 1) * pageSize).Joins("Category").
@@ -94,7 +94,7 @@ func EditArt(id int, data *Article) int {
 	maps["content"] = data.Content
 	maps["img"] = data.Img
 
-	err = db.Where("id=?", id).Model(&Article{}).Updates(maps).Error
+	err = db.Where("id = ?", id).Model(&Article{}).Updates(maps).Error
 	if err != nil {
 		return errmsg.ERROR
 	}

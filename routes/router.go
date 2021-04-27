@@ -51,8 +51,9 @@ func InitRouter() {
 
 		// atricle
 		router.POST("art/add", v1.AddArt)
-		router.GET("art/getList", v1.GetArtslist)            // 获取文章列表
-		router.GET("art/getInfo/:id", v1.GetArtInfo)         // 获取文章详情
+		router.GET("art/getList", v1.GetArtslist) // 获取文章列表
+		//router.GET("art/getInfo/:id", v1.GetArtInfo)         // 获取文章详情  json 类型请求
+		router.GET("art/getInfo", v1.GetArtInfo)              // 获取文章详情 Query 请求
 		router.GET("art/getArtCidLists", v1.GetArtByCidLists) // 根据分类Cid 获取文章详情
 
 		router.PUT("art/edit/:id", v1.EditArt)

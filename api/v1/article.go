@@ -19,8 +19,10 @@ import (
 func GetArtInfo(c *gin.Context) {
 	var data model.Article
 	var code int
-	id, _ := strconv.Atoi(c.Param("id"))
-	_ = c.ShouldBindJSON(&data)
+	// 两种不同的请求，对应的路由也不一样
+	// a GET request to /user/5
+	//id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Query("id"))
 	data, code = model.GetArtInfo(id)
 	if code == errmsg.SUCCSE {
 		code = errmsg.SUCCSE
