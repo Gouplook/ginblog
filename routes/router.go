@@ -30,16 +30,16 @@ import (
 //}
 
 // 如何剥离出func
-func InitRouter(){
+func InitRouter() {
 	gin.SetMode(utils.AppMode)
-	r := gin.Default()  // 默认加两个中间件
+	r := gin.Default() // 默认加两个中间件
 
 	router := r.Group("api/v1")
 	{
 		//路由组
 		router.GET("Hello", func(context *gin.Context) {
-			context.JSON(http.StatusOK,gin.H{
-				"msg" :"ppppp",
+			context.JSON(http.StatusOK, gin.H{
+				"msg": "ppppp",
 			})
 		})
 
@@ -47,25 +47,25 @@ func InitRouter(){
 		router.POST("user/add", v1.AddUser)
 		router.GET("uses", v1.GetUsers)
 		router.PUT("user/:id", v1.EditUser)
-		router.DELETE("dele/:id",v1.DeleteUser)
+		router.DELETE("dele/:id", v1.DeleteUser)
 
 		// atricle
 		router.POST("art/add", v1.AddArt)
-		router.GET("art/getList", v1.GetArtslist)  // 获取文章列表
-		router.GET("art/getInfo/:id", v1.GetArtInfo) // 获取文章详情
+		router.GET("art/getList", v1.GetArtslist)            // 获取文章列表
+		router.GET("art/getInfo/:id", v1.GetArtInfo)         // 获取文章详情
+		router.GET("art/getArtCidLists", v1.GetArtByCidLists) // 根据分类Cid 获取文章详情
+
 		router.PUT("art/edit/:id", v1.EditArt)
-		router.DELETE("art/dele:id",v1.DeleteArt)
+		router.DELETE("art/dele:id", v1.DeleteArt)
 
 		// category
 		router.POST("cate/add", v1.AddCate)
 		router.GET("cate", v1.GetList)
-		router.GET("cateinfo/:id", v1.GetInfo)  // 获取分类详情
+		router.GET("cateinfo/:id", v1.GetInfo) // 获取分类详情
 		router.PUT("cate/edit/:id", v1.EditCate)
-		router.DELETE("cate/dele/:id",v1.DeleteCate)
+		router.DELETE("cate/dele/:id", v1.DeleteCate)
 
 	}
 
-	r.Run(utils.HttpPort)
+	_ = r.Run(utils.HttpPort)
 }
-
-

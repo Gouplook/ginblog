@@ -19,26 +19,25 @@ import (
 func GetArtInfo(c *gin.Context) {
 	var data model.Article
 	var code int
-	id,_ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("id"))
 	_ = c.ShouldBindJSON(&data)
-	data ,code = model.GetArtInfo(id)
+	data, code = model.GetArtInfo(id)
 	if code == errmsg.SUCCSE {
 		code = errmsg.SUCCSE
 	}
-	c.JSON(http.StatusOK,gin.H{
-		"status" :code,
-		"data": data,
-		"message":errmsg.GetErrMsg(code),
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"message": errmsg.GetErrMsg(code),
 	})
 
 }
-
 
 // 添加文章
 func AddArt(c *gin.Context) {
 	var data model.Article
 	_ = c.ShouldBindJSON(&data) // json 格式绑定
-	
+
 	// 插入数据
 	code := model.CreateArt(&data)
 
@@ -65,9 +64,9 @@ func GetArtslist(c *gin.Context) {
 		pageNum = -1
 	}
 
-	data,total := model.GetArtList(pageSize, pageNum)
+	data, total := model.GetArtList(pageSize, pageNum)
 	c.JSON(http.StatusOK, gin.H{
-		"total" :total,
+		"total":   total,
 		"status":  errmsg.SUCCSE,
 		"data":    data,
 		"message": errmsg.GetErrMsg(errmsg.SUCCSE),
@@ -83,6 +82,27 @@ func EditArt(c *gin.Context) {
 	//检查输入的文章是否存在
 	code := model.EditArt(id, &data)
 	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"message": errmsg.GetErrMsg(code),
+	})
+}
+
+// 根据文章分类类型查找文章 GetArtByCidLists
+func GetArtByCidLists(c *gin.Context) {
+	// postman 传Json
+	//cid, _ := strconv.Atoi(c.Param("cid"))
+	//pageSize, _ := strconv.Atoi(c.Param("pageSize"))
+	//pageNum, _ := strconv.Atoi(c.Param("pageNum"))
+
+	//
+	cid, _ := strconv.Atoi(c.Query("cid"))
+	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
+	pageNum, _ := strconv.Atoi(c.Query("pageNum"))
+
+	data, code, total := model.GetArtByCidLists(cid, pageSize, pageNum)
+	c.JSON(http.StatusOK, gin.H{
+		"total":   total,
 		"status":  code,
 		"data":    data,
 		"message": errmsg.GetErrMsg(code),
