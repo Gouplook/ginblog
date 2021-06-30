@@ -46,9 +46,13 @@ func AddUser(c *gin.Context){
 
 // 查询用户列表
 func GetUsers(c *gin.Context){
-	// 列表涉及到分页
-	pageSize,_ := strconv.Atoi(c.Query("pageSize"))
-	pageNum, _ := strconv.Atoi(c.Query("pageNum"))
+	// 列表涉及到分页（URL方式请求 ：/path?id=1234&name=Manu&value= ）
+	// pageSize,_ := strconv.Atoi(c.Query("pageSize"))
+	// pageNum, _ := strconv.Atoi(c.Query("pageNum"))
+
+	pageSize,_  :=strconv.Atoi(c.PostForm("pageSize"))
+	pageNum,_  :=strconv.Atoi(c.PostForm("pageNum"))
+
 	if pageSize == 0 {
 		pageSize= -1
 	}

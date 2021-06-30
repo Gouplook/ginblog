@@ -12,27 +12,26 @@ import (
 	"gorm.io/gorm"
 )
 
+// 分类模型
 type Category struct {
-	ID uint `gorm:"primary_key;auto_increment" json:"id"`
-	Name string `gorm:"type: varchar(20);not null" json:"name"`
+	ID   uint   `gorm:"primary_key;auto_increment;comment:分类自增Id" json:"id"`
+	Name string `gorm:"type: varchar(20);not null;comment:分类名称" json:"name"`
 }
 
-
 // CheckCategory 查询分类是否存在
-func CheckCategory(name string)(code int ){
+func CheckCategory(name string) (code int) {
 	var cate Category
-	err = db.Select("id").Where("name",name).First(&cate).Error
+	err = db.Select("id").Where("name", name).First(&cate).Error
 	if cate.ID > 0 {
 		return errmsg.ERROR_CATENAME_USED
 	}
 	return errmsg.ERROR_CATENAME_USED
 }
 
-
-//新增分类
+// 新增分类
 func CreateCate(data *Category) (code int) {
 	// 插入分类
-	err := db.Create(&data).Error
+	err = db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
@@ -40,28 +39,28 @@ func CreateCate(data *Category) (code int) {
 }
 
 // 获取分类详情
-func FindInfo(id int ) (Category, int ) {
+func FindInfo(id int) (Category, int) {
 	var cate Category
-	err := db.Limit(1).Where("ID=?",id).First(&cate).Error
+	err = db.Limit(1).Where("ID=?", id).First(&cate).Error
 	if err != nil {
-		return cate,errmsg.ERROR
+		return cate, errmsg.ERROR
 	}
-	return cate,errmsg.SUCCSE
+	return cate, errmsg.SUCCSE
 }
 
 // 获取分类列表
-// pageNum 当前页数
+// pageNum  当前页数
 // pageSize 页的条数
 func GetCateLists(pageSize int, pageNum int) []Category {
 	var cateLists []Category
-	err := db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&cateLists).Error
+	err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&cateLists).Error
 	if err != nil && gorm.ErrRecordNotFound != nil {
 		return nil
 	}
 	return cateLists
 }
 
-//编辑分类
+// 编辑分类
 func EditCate(id int, data *Category) int {
 	var maps = make(map[string]interface{})
 	maps["name"] = data.Name
@@ -73,7 +72,7 @@ func EditCate(id int, data *Category) int {
 	return errmsg.SUCCSE
 }
 
-//删除分类
+// 删除分类
 func DeleteCate(id int) int {
 	err = db.Where("id=?", id).Delete(&Category{}).Error
 	if err != nil {
@@ -81,4 +80,3 @@ func DeleteCate(id int) int {
 	}
 	return errmsg.SUCCSE
 }
-
