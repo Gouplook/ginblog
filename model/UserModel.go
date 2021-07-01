@@ -10,6 +10,7 @@ package model
 import (
 	"encoding/base64"
 	"ginblog/utils/errmsg"
+	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/crypto/scrypt"
 	"gorm.io/gorm"
 	"log"
@@ -59,7 +60,7 @@ func GetUsers(pageSize int, pageNum int) []User {
 }
 
 // 编辑用户
-func EditUsers(id int, data *User) (int) {
+func EditUsers(id int, data *User) int {
 	var maps = make(map[string]interface{})
 	maps["username"] = data.Username
 	maps["role"] = data.Role
@@ -94,4 +95,39 @@ func ScryptPassWord(passWord string) string {
 	}
 	passWord = base64.StdEncoding.EncodeToString(dk)
 	return passWord
+}
+
+//  CheckLogin 后台登录验证
+func CheckLogin(username string, password string) (User, int) {
+	var user User
+	var PasswordErr error
+
+	db.Where("username= ?", username).First(&user)
+	PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if user.ID == 0 {
+		return user, errmsg.ERROR_USER_NOT_EXIST
+	}
+	if PasswordErr != nil {
+		return user, errmsg.ERROR_PASSWORD_WRONG
+	}
+	if user.Role != 1 {
+		return user, errmsg.ERROR_USER_NO_RIGHT
+	}
+
+	return user, errmsg.SUCCSE
+}
+
+// CheckLoginFront 前台登录
+func CheckLoginFront(username string, password string) (User, int) {
+	var user User
+	var PasswordErr error
+	db.Where("username= ?",username).First(&user)
+	PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if user.ID == 0 {
+		return user, errmsg.ERROR_USER_NOT_EXIST
+	}
+	if PasswordErr != nil {
+		return user, errmsg.ERROR_PASSWORD_WRONG
+	}
+	return user, errmsg.SUCCSE
 }
