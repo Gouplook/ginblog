@@ -55,6 +55,9 @@ func InitRouter() {
 
 		// 文件上传
 		auth.POST("upload",v1.UpLoad)
+
+		//修改密码
+		auth.POST("admin/changepw/:id", v1.ChangeUserPassword)
 	}
 
 	// 前端展示页面接口
@@ -99,6 +102,8 @@ func InitRouter() {
 		router.POST("comment/deleteComment",v1.DeleteComment)
 		// 文件上传
 		router.POST("upload",v1.UpLoad)
+		//修改密码
+		router.POST("admin/changepw/:id", v1.ChangeUserPassword)
 	}
 
 	_ = r.Run(utils.HttpPort)

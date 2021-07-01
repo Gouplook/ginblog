@@ -97,6 +97,15 @@ func ScryptPassWord(passWord string) string {
 	return passWord
 }
 
+// ChangePassword 修改密码
+func ChangePassword(id int,data *User)int{
+	err = db.Select("password").Where("id= ?",id).Updates(&data).Error
+	if err != nil {
+		return errmsg.ERROR
+	}
+	return errmsg.SUCCSE
+}
+
 //  CheckLogin 后台登录验证
 func CheckLogin(username string, password string) (User, int) {
 	var user User

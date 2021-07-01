@@ -97,4 +97,21 @@ func DeleteUser(c *gin.Context){
 	})
 }
 
+// 修改密码
+func ChangeUserPassword(c *gin.Context) {
+	var data model.User
+	id, _ := strconv.Atoi(c.PostForm("id"))
+	_ = c.ShouldBindJSON(&data)
+
+	code := model.ChangePassword(id, &data)
+
+	c.JSON(
+		http.StatusOK, gin.H{
+			"status":  code,
+			"message": errmsg.GetErrMsg(code),
+		},
+	)
+}
+
+
 
