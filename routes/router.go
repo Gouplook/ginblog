@@ -36,7 +36,7 @@ func InitRouter() {
 
 	router := r.Group("api/v1")
 	{
-		// 路由组
+		// 路由组(测试）
 		router.GET("Hello", func(context *gin.Context) {
 			context.JSON(http.StatusOK, gin.H{
 				"msg": "ppppp",
@@ -63,7 +63,6 @@ func InitRouter() {
 		router.GET("cateinfo/:id", v1.GetInfo) // 获取分类详情
 		router.PUT("cate/edit/:id", v1.EditCate)
 		router.POST("cate/dele/:id", v1.DeleteCate)
-
 	}
 
 	_ = r.Run(utils.HttpPort)
