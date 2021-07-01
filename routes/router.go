@@ -51,13 +51,11 @@ func InitRouter() {
 
 		// 文章模块 atricle
 		router.POST("art/add", v1.AddArt)
-		router.GET("art/getList", v1.GetArtslist) // 获取文章列表
-		// router.GET("art/getInfo/:id", v1.GetArtInfo)         // 获取文章详情  json 类型请求
-		router.GET("art/getInfo", v1.GetArtInfo)              // 获取文章详情 Query 请求
+		router.POST("art/getList", v1.GetArtslist)            // 获取文章列表
+		router.POST("art/getInfo", v1.GetArtInfo)             // 获取文章详情 Query 请求
+		router.PUT("art/edit/:id", v1.EditArt)                // 编辑文章
+		router.POST("art/delete", v1.DeleteArt)               // 删除文章
 		router.GET("art/getArtCidLists", v1.GetArtByCidLists) // 根据分类Cid 获取文章详情
-
-		router.PUT("art/edit/:id", v1.EditArt)
-		router.DELETE("art/dele:id", v1.DeleteArt)
 
 		// 文章分类模块
 		router.POST("cate/add", v1.AddCate)

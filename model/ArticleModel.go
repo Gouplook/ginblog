@@ -23,6 +23,7 @@ type Article struct {
 	CommentCount int    `gorm:"type:int;not null; default:0;comment:文章评论量" json:"comment_count"` // 评论量
 	Img          string `gorm:"type:varchar(100);comment:文章相册" json:"img"`
 	CategoryId   int    `gorm:"type:int;not null; default:0;comment:文章分类" json:"category_id"` // 文章对应的分类
+	IsDel        int    `gorm:"type:tinyint;not null;default:0;comment:是否删除 0-未删除，1-已删除" json:"is_del"`
 }
 
 // 新增文章
@@ -40,7 +41,7 @@ func GetArtInfo(id int) (Article, int) {
 	var art Article
 	// 先进行查询，存在更新阅读量
 	// err = db.Where("id = ?", id).Preload("Category").First(&art).Error
-	err = db.Where("id = ?",id).First(&art).Error
+	err = db.Where("id = ?", id).First(&art).Error
 	if err != nil {
 		return art, errmsg.ERROR_ART_NOT_EXIST
 	}
@@ -103,8 +104,11 @@ func EditArt(id int, data *Article) int {
 }
 
 // 删除文章
-func DeleteArt(id int) int {
-	err = db.Where("id=?", id).Delete(&Article{}).Error
+func DeleteArt(id int, data *Article) int {
+	var maps = make(map[string]interface{})
+	maps["is_del"] = data.IsDel
+	// err = db.Where("id=?", id).Delete(&Article{}).Error // 硬删除
+	err = db.Where("id= ?", id).Model(&Article{}).Updates(maps).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
