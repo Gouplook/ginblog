@@ -52,8 +52,11 @@ func GetInfo(c *gin.Context){
 // 查询分类列表
 func GetList(c *gin.Context) {
 	// 列表涉及到分页
-	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
-	pageNum, _ := strconv.Atoi(c.Query("pageNum"))
+	// pageSize, _ := strconv.Atoi(c.Query("pageSize"))
+	// pageNum, _ := strconv.Atoi(c.Query("pageNum"))
+	pageSize,_ := strconv.Atoi(c.PostForm("pageSize"))
+	pageNum,_ := strconv.Atoi(c.PostForm("pageNum"))
+
 	if pageSize == 0 {
 		pageSize = -1
 	}
@@ -86,7 +89,9 @@ func EditCate(c *gin.Context) {
 // 删除分类
 func DeleteCate(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	code := model.DeleteCate(id)
+	var data model.Category
+	data.IsDel,_ = strconv.Atoi(c.PostForm("isDel"))
+	code := model.DeleteCate(id,&data)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  code,

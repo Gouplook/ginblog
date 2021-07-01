@@ -43,13 +43,13 @@ func InitRouter() {
 			})
 		})
 
-		// user v1 是API中v1文件的包名
+		// 用户模块 v1 是API中v1文件的包名
 		router.POST("user/add", v1.AddUser)
 		router.POST("uses", v1.GetUsers)
 		router.PUT("user/:id", v1.EditUser)
 		router.DELETE("dele/:id", v1.DeleteUser)
 
-		// atricle
+		// 文章模块 atricle
 		router.POST("art/add", v1.AddArt)
 		router.GET("art/getList", v1.GetArtslist) // 获取文章列表
 		// router.GET("art/getInfo/:id", v1.GetArtInfo)         // 获取文章详情  json 类型请求
@@ -59,12 +59,12 @@ func InitRouter() {
 		router.PUT("art/edit/:id", v1.EditArt)
 		router.DELETE("art/dele:id", v1.DeleteArt)
 
-		// category
+		// 文章分类模块
 		router.POST("cate/add", v1.AddCate)
-		router.GET("cate", v1.GetList)
+		router.POST("cate", v1.GetList)
 		router.GET("cateinfo/:id", v1.GetInfo) // 获取分类详情
 		router.PUT("cate/edit/:id", v1.EditCate)
-		router.DELETE("cate/dele/:id", v1.DeleteCate)
+		router.POST("cate/dele/:id", v1.DeleteCate)
 
 	}
 

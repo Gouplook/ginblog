@@ -14,7 +14,6 @@ import (
 
 // 文章模型
 type Article struct {
-	// Category Category `gorm:"foreignkey:Cid"` // 添加外键
 	gorm.Model
 	Title        string `gorm:"type:varchar(100);comment:文章标题 " json:"title"`
 	Cid          int    `gorm:"type:int;not null;comment:文章类型" json:"cid"`

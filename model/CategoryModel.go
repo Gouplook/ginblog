@@ -16,6 +16,7 @@ import (
 type Category struct {
 	ID   uint   `gorm:"primary_key;auto_increment;comment:分类自增Id" json:"id"`
 	Name string `gorm:"type: varchar(20);not null;comment:分类名称" json:"name"`
+	IsDel int  `gorm:"type:tinyint;not null;comment:是否删除分类 0-未删除，1-删除" json:"is_del"`
 }
 
 // CheckCategory 查询分类是否存在
@@ -73,8 +74,11 @@ func EditCate(id int, data *Category) int {
 }
 
 // 删除分类
-func DeleteCate(id int) int {
-	err = db.Where("id=?", id).Delete(&Category{}).Error
+func DeleteCate(id int, data *Category) int {
+	// err = db.Where("id=?", id).Delete(&Category{}).Error
+	var maps = make(map[string]interface{})
+	maps["is_del"] = data.IsDel
+	err = db.Where("id= ?",id).Model(&Category{}).Updates(maps).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
