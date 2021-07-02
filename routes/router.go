@@ -20,11 +20,16 @@ func InitRouter() {
 	gin.SetMode(utils.AppMode)
 	r := gin.Default() // 默认加两个中间件
 
+	// 跨域问题
+	r.Use(middleware.Cors())
+	// 日志
+	r.Use(middleware.Log())
+
+
 	// 后台管理路由接口
 	auth := r.Group("api/v1")
 	auth.Use(middleware.JwtToken())
 	{
-		// 登录控制模块
 
 		// 用户模块 v1 是API中v1文件的包名
 		auth.POST("user/add", v1.AddUser)
@@ -66,7 +71,7 @@ func InitRouter() {
 		// 路由组(测试）
 		router.GET("Hello", func(context *gin.Context) {
 			context.JSON(http.StatusOK, gin.H{
-				"msg": "ppppp",
+				"msg": "测试路由.....",
 			})
 		})
 
