@@ -8,12 +8,9 @@
 package model
 
 import (
-	"encoding/base64"
 	"ginblog/utils/errmsg"
 	"golang.org/x/crypto/bcrypt"
-	"golang.org/x/crypto/scrypt"
 	"gorm.io/gorm"
-	"log"
 )
 
 type User struct {
@@ -38,7 +35,7 @@ func CheckUser(username string) int {
 // 新增用户
 func CreateUser(data *User) (code int) {
 	// 函数密文存储
-	data.Password = ScryptPassWord(data.Password)
+	data.Password,_ = ScryptPassWord(data.Password)
 	// 插入用户
 	err = db.Create(&data).Error
 	if err != nil {
@@ -86,16 +83,26 @@ func DeleteUser(id int) int {
 //	u.Password = ScryptPassWord(u.Password)
 // }
 //
-func ScryptPassWord(passWord string) string {
+func ScryptPassWord(passWord string) (string, int ) {
 	// 加密的盐
-	salt := []byte{1, 2, 3, 4, 5, 6, 7, 8}
-	dk, err := scrypt.Key([]byte(passWord), salt, 64, 8, 1, 32)
+	// salt := []byte{1, 2, 3, 4, 5, 6, 7, 8}
+	// dk, err := scrypt.Key([]byte(passWord), salt, 64, 8, 1, 32)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// passWord = base64.StdEncoding.EncodeToString(dk)
+	// return passWord
+
+	// 利用bcrypt对明文密码进行加密
+	var cost int = 10
+	hashPw,err := bcrypt.GenerateFromPassword([]byte(passWord),cost)
 	if err != nil {
-		log.Fatal(err)
+		return "" , errmsg.ERROR_BCRYPT_PASSWORD_WRONG
 	}
-	passWord = base64.StdEncoding.EncodeToString(dk)
-	return passWord
+	return string(hashPw),errmsg.SUCCSE
 }
+
+
 
 // ChangePassword 修改密码
 func ChangePassword(id int,data *User)int{
@@ -109,18 +116,19 @@ func ChangePassword(id int,data *User)int{
 //  CheckLogin 后台登录验证
 func CheckLogin(username string, password string) (User, int) {
 	var user User
-	// var PasswordErr error
+	var PasswordErr error
 
 	db.Where("username= ?", username).First(&user)
-	// PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
-	_ = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	// _ = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if user.ID == 0 {
 		return user, errmsg.ERROR_USER_NOT_EXIST
 	}
 	// 成功返回nil
-	// if PasswordErr != nil {
-	// 	return user, errmsg.ERROR_PASSWORD_WRONG
-	// }
+	if PasswordErr != nil {
+		return user, errmsg.ERROR_PASSWORD_WRONG
+	}
+
 	if user.Role != 0 {
 		return user, errmsg.ERROR_USER_NO_RIGHT
 	}
