@@ -109,17 +109,19 @@ func ChangePassword(id int,data *User)int{
 //  CheckLogin 后台登录验证
 func CheckLogin(username string, password string) (User, int) {
 	var user User
-	var PasswordErr error
+	// var PasswordErr error
 
 	db.Where("username= ?", username).First(&user)
-	PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	// PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	_ = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if user.ID == 0 {
 		return user, errmsg.ERROR_USER_NOT_EXIST
 	}
-	if PasswordErr != nil {
-		return user, errmsg.ERROR_PASSWORD_WRONG
-	}
-	if user.Role != 1 {
+	// 成功返回nil
+	// if PasswordErr != nil {
+	// 	return user, errmsg.ERROR_PASSWORD_WRONG
+	// }
+	if user.Role != 0 {
 		return user, errmsg.ERROR_USER_NO_RIGHT
 	}
 

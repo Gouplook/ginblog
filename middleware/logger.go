@@ -61,6 +61,7 @@ func Log() gin.HandlerFunc {
 		if err != nil {
 			hostName = "unknown"
 		}
+
 		statusCode := c.Writer.Status()
 		clientIp := c.ClientIP()
 		userAgent := c.Request.UserAgent()

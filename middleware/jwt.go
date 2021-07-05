@@ -33,6 +33,7 @@ type MyClaims struct {
 	jwt.StandardClaims
 }
 
+
 // 自定义错误
 var (
 	TokenExpired     error = errors.New("Token已过期,请重新登录")

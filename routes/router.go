@@ -18,7 +18,8 @@ import (
 // 如何剥离出func
 func InitRouter() {
 	gin.SetMode(utils.AppMode)
-	r := gin.Default() // 默认加两个中间件
+	// r := gin.Default() // 默认加两个中间件
+	r := gin.New()
 
 	// 跨域问题
 	r.Use(middleware.Cors())
@@ -66,7 +67,7 @@ func InitRouter() {
 	}
 
 	// 前端展示页面接口
-	router := r.Group("api/v1")
+	router := r.Group("api/v2")
 	{
 		// 路由组(测试）
 		router.GET("Hello", func(context *gin.Context) {
