@@ -28,3 +28,6 @@ time="2021-07-05 14:45:51" level=info Agent=PostmanRuntime/7.28.0 DataSize=239 H
 time="2021-07-05 14:45:53" level=info Agent=PostmanRuntime/7.28.0 DataSize=239 HostName=uplookdeMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v2/login SpendTime="2 ms" status=200
 time="2021-07-05 14:45:54" level=info Agent=PostmanRuntime/7.28.0 DataSize=239 HostName=uplookdeMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v2/login SpendTime="0 ms" status=200
 time="2021-07-05 14:46:10" level=info Agent=PostmanRuntime/7.28.0 DataSize=250 HostName=uplookdeMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="12 ms" status=200
+time="2021-07-05 15:23:03" level=info Agent=PostmanRuntime/7.28.0 DataSize=250 HostName=uplookdeMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="6 ms" status=200
+time="2021-07-05 16:19:08" level=info Agent=PostmanRuntime/7.28.0 DataSize=250 HostName=uplookdeMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="7 ms" status=200
+time="2021-07-05 16:19:28" level=info Agent=PostmanRuntime/7.28.0 DataSize=250 HostName=uplookdeMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v1/user/add SpendTime="5 ms" status=200

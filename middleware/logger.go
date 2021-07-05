@@ -20,22 +20,25 @@ import (
 func Log() gin.HandlerFunc {
 	filePath := "log/log"
 
-	scr, err := os.OpenFile(filePath, os.O_RDWR | os.O_CREATE, 0755)
+	scr, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		fmt.Println("err: ", err)
 	}
+	// 定义一个logger 日志管理者
 	logger := logrus.New()
 
 	// 日志输出
 	logger.Out = scr
 	logger.SetLevel(logrus.DebugLevel)
+	logger.Formatter.(*logrus.TextFormatter).DisableColors = true // 日志是否带颜色
 
-	// 定期清理日志
-	logWriter,_ := retalog.New(
+	// 定期清理日志(利用file-rotatelogs）
+	logWriter, _ := retalog.New(
 		filePath+"%Y%m%d.log",
-		retalog.WithMaxAge(7*24*time.Hour),
-		retalog.WithRotationTime(24*time.Hour),
-		)
+		retalog.WithMaxAge(7*24*time.Hour),     // 文件轮换间隔
+		retalog.WithRotationTime(24*time.Hour), // 等待清除旧日志的时间
+
+	)
 
 	writeMap := lfshook.WriterMap{
 		logrus.InfoLevel:  logWriter,
@@ -44,26 +47,30 @@ func Log() gin.HandlerFunc {
 		logrus.WarnLevel:  logWriter,
 		logrus.ErrorLevel: logWriter,
 		logrus.PanicLevel: logWriter,
+		logrus.TraceLevel: logWriter,
 	}
 
-	Hook := lfshook.NewHook(writeMap,&logrus.TextFormatter{
+	Hook := lfshook.NewHook(writeMap, &logrus.TextFormatter{
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
 
+	// 给日志管理者加一个钩子
 	logger.AddHook(Hook)
 
-	return func (c *gin.Context) {
+	return func(c *gin.Context) {
 		startTime := time.Now()
 		c.Next()
 		stopTime := time.Since(startTime).Milliseconds()
 		spendTime := fmt.Sprintf("%d ms", stopTime)
+		// 服务器名称
 		hostName, err := os.Hostname()
 		if err != nil {
 			hostName = "unknown"
 		}
 
-		statusCode := c.Writer.Status()
+		// 服务器IP
 		clientIp := c.ClientIP()
+		statusCode := c.Writer.Status()
 		userAgent := c.Request.UserAgent()
 		dataSize := c.Writer.Size()
 		if dataSize < 0 {
@@ -72,6 +79,7 @@ func Log() gin.HandlerFunc {
 		method := c.Request.Method
 		path := c.Request.RequestURI
 
+		// 定义日志需要输出的字段
 		entry := logger.WithFields(logrus.Fields{
 			"HostName":  hostName,
 			"status":    statusCode,
@@ -88,9 +96,9 @@ func Log() gin.HandlerFunc {
 		}
 		if statusCode >= 500 {
 			entry.Error()
-		}else if statusCode >= 400 {
+		} else if statusCode >= 400 {
 			entry.Warn()
-		}else {
+		} else {
 			entry.Info()
 		}
 	}

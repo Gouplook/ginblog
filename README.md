@@ -27,7 +27,8 @@ golang
     gorm(v1 && v2)
     jwt-go
     scrypt
-    logrus
+    logrus // 日志框架
+    github.com/lestrrat-go/file-rotatelogs  // 定期轮换日志文件
     gin-contrib/cors
     go-playground/validator/v10
     go-ini
