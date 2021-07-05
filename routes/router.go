@@ -19,6 +19,8 @@ import (
 func InitRouter() {
 	gin.SetMode(utils.AppMode)
 	// r := gin.Default() // 默认加两个中间件
+
+	// 创建一个不包含中间件的路由器
 	r := gin.New()
 
 	// 跨域问题
