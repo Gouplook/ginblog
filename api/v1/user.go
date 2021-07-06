@@ -10,6 +10,7 @@ package v1
 import (
 	"ginblog/model"
 	"ginblog/utils/errmsg"
+	"ginblog/validator"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -33,6 +34,18 @@ func AddUser(c *gin.Context){
 	// todo
 	var data model.User
 	_ = c.ShouldBindJSON(&data)  // json 格式绑定
+
+	// 用户参数校验
+	msg, validCode :=  validator.Validate(&data)
+	if validCode != errmsg.SUCCSE {
+		c.JSON(http.StatusOK,gin.H{
+				"status":validCode,
+				"message":msg,
+			})
+		c.Abort()
+		return
+	}
+
 	// 添加用户之前，需要查找用户是否存在
 	code :=  model.CheckUser(data.Username)
 	// 用户已经存在

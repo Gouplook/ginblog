@@ -25,12 +25,14 @@ gorm.io
 golang
     Gin web framework
     gorm(v1 && v2)
-    jwt-go
-    scrypt
+    jwt-go  
+    scrypt  // 密码
     logrus // 日志框架
     github.com/lestrrat-go/file-rotatelogs  // 定期轮换日志文件
-    gin-contrib/cors
-    go-playground/validator/v10
+    gin-contrib/cors  // 跨域
+    go-playground/validator/v10  // 参数校验
+    github.com/go-playground/universal-translator // 参数校验翻译器
+
     go-ini
 JavaScript
     vue
@@ -43,4 +45,6 @@ JavaScript
     moment
 MySQL version:8.0.21
 
+
+RegisterDefaultTranslations registers a set of default translations for all built in tag's in validator; you may add your own as desired.
 

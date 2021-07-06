@@ -15,10 +15,10 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"type:varchar(20);comment:用户名称" json:"username"`
-	Password string `gorm:"type:varchar(64);comment:用户密码" json:"password"`
-	Role     int    `gorm:"type:int;comment:用户角色" json:"role"`                 // 0= 管理员
-	IsDel    int    `gorm:"type:tinyint;default:0;comment:是否删除" json:"is_del"` // 是否删除
+	Username string `gorm:"type:varchar(20);comment:用户名称" json:"username" validate:"required,min=4,max=12" label:"用户名"`
+	Password string `gorm:"type:varchar(64);comment:用户密码" json:"password" validate:"required,min=4,max=100" label:"密码"`
+	Role     int    `gorm:"type:int;comment:用户角色" json:"role" validate:"required,gte=2" label:"角色码"` // 0= 管理员
+	IsDel    int    `gorm:"type:tinyint;default:0;comment:是否删除" json:"is_del"`                       // 是否删除
 }
 
 // 查询用户是否存在
@@ -35,7 +35,7 @@ func CheckUser(username string) int {
 // 新增用户
 func CreateUser(data *User) (code int) {
 	// 函数密文存储
-	data.Password,_ = ScryptPassWord(data.Password)
+	data.Password, _ = ScryptPassWord(data.Password)
 	// 插入用户
 	err = db.Create(&data).Error
 	if err != nil {
@@ -83,7 +83,7 @@ func DeleteUser(id int) int {
 //	u.Password = ScryptPassWord(u.Password)
 // }
 //
-func ScryptPassWord(passWord string) (string, int ) {
+func ScryptPassWord(passWord string) (string, int) {
 	// 加密的盐
 	// salt := []byte{1, 2, 3, 4, 5, 6, 7, 8}
 	// dk, err := scrypt.Key([]byte(passWord), salt, 64, 8, 1, 32)
@@ -95,18 +95,16 @@ func ScryptPassWord(passWord string) (string, int ) {
 
 	// 利用bcrypt对明文密码进行加密
 	var cost int = 10
-	hashPw,err := bcrypt.GenerateFromPassword([]byte(passWord),cost)
+	hashPw, err := bcrypt.GenerateFromPassword([]byte(passWord), cost)
 	if err != nil {
-		return "" , errmsg.ERROR_BCRYPT_PASSWORD_WRONG
+		return "", errmsg.ERROR_BCRYPT_PASSWORD_WRONG
 	}
-	return string(hashPw),errmsg.SUCCSE
+	return string(hashPw), errmsg.SUCCSE
 }
 
-
-
 // ChangePassword 修改密码
-func ChangePassword(id int,data *User)int{
-	err = db.Select("password").Where("id= ?",id).Updates(&data).Error
+func ChangePassword(id int, data *User) int {
+	err = db.Select("password").Where("id= ?", id).Updates(&data).Error
 	if err != nil {
 		return errmsg.ERROR
 	}
@@ -140,7 +138,7 @@ func CheckLogin(username string, password string) (User, int) {
 func CheckLoginFront(username string, password string) (User, int) {
 	var user User
 	var PasswordErr error
-	db.Where("username= ?",username).First(&user)
+	db.Where("username= ?", username).First(&user)
 	PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if user.ID == 0 {
 		return user, errmsg.ERROR_USER_NOT_EXIST
