@@ -1,7 +1,7 @@
 /**
  * @Author: yinjinlin
- * @File:  jwt
- * @Description:
+ * @File:
+ * @Description: jwt  生成和设置token
  * @Date: 2021/7/1 下午2:36
  */
 
@@ -44,8 +44,11 @@ var (
 
 // CreateToken 生成token
 func (j *JWT) CreateToken(claims MyClaims) (string, error) {
+	// 利用HS256 生成 token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.JwtKey)
+
+
 }
 
 // ParserToken 解析token

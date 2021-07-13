@@ -25,6 +25,7 @@ func Login(c *gin.Context){
 	var code int
 	 formData,code = model.CheckLogin(formData.Username, formData.Password)
 
+	 // 登录成功，生成token
 	if code == errmsg.SUCCSE {
 		setToken(c, formData)
 	}else {

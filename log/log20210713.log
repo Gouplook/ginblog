@@ -1,0 +1,3 @@
+time="2021-07-13 14:06:21" level=info Agent=PostmanRuntime/7.28.1 DataSize=58 HostName=uplookdeMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v1/art/add SpendTime="0 ms" status=200
+time="2021-07-13 14:06:29" level=info Agent=PostmanRuntime/7.28.1 DataSize=239 HostName=uplookdeMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v2/login SpendTime="104 ms" status=200
+time="2021-07-13 14:09:35" level=info Agent=PostmanRuntime/7.28.1 DataSize=344 HostName=uplookdeMacBook-Pro.local Ip=127.0.0.1 Method=POST Path=/api/v1/art/add SpendTime="14 ms" status=200

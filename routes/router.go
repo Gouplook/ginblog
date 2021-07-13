@@ -66,6 +66,10 @@ func InitRouter() {
 
 		//修改密码
 		auth.POST("admin/changepw/:id", v1.ChangeUserPassword)
+
+		// 更新个人设置
+		auth.GET("admim/profile/:id",v1.Getprofile)
+		auth.POST("admin/profile/:id", v1.UpdateProfile)
 	}
 
 	// 前端展示页面接口

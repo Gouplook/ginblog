@@ -21,6 +21,7 @@ func Log() gin.HandlerFunc {
 	filePath := "log/log"
 
 	scr, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 0755)
+
 	if err != nil {
 		fmt.Println("err: ", err)
 	}
