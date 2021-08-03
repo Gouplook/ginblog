@@ -30,6 +30,7 @@ func InitDb (){
 		utils.DbPassWord,
 		utils.DbName)
 
+	// 定义一种模式
 	db, err = gorm.Open(mysql.Open(sql),&gorm.Config{
 		// gorm日志模式：silent
 
@@ -42,6 +43,12 @@ func InitDb (){
 			SingularTable: true,
 		},
 	})
+	gorm.Open(mysql.Open(sql),&gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+		SkipDefaultTransaction: true,
+	})
+
+
 
 	if err != nil {
 		fmt.Println("连接数据库失败，请检查参数：", err)
@@ -61,6 +68,5 @@ func InitDb (){
 
 	// SetConnMaxLifetiment 设置连接的最大可复用时间。
 	sqlDB.SetConnMaxLifetime(10 * time.Second)
-
 
 }

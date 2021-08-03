@@ -18,17 +18,37 @@ import (
 )
 
 // Login 后台登陆
-func Login(c *gin.Context){
+func Login(c *gin.Context) {
 	var formData model.User
 	_ = c.ShouldBindJSON(&formData)
 	var token string
 	var code int
-	 formData,code = model.CheckLogin(formData.Username, formData.Password)
+	formData, code = model.CheckLogin(formData.Username, formData.Password)
 
-	 // 登录成功，生成token
+	// 登录成功，生成token
 	if code == errmsg.SUCCSE {
 		setToken(c, formData)
-	}else {
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"status":  code,
+			"data":    formData.Username,
+			"id":      formData.ID,
+			"message": errmsg.GetErrMsg(code),
+			"token":   token,
+		})
+	}
+}
+
+func Login2(c *gin.Context) {
+	var formData model.User
+	_ = c.ShouldBindJSON(&formData)
+	var token string
+	var code int
+
+	formData, code = model.CheckLogin(formData.Username, formData.Password)
+	if code == errmsg.SUCCSE {
+		setToken(c, formData)
+	} else {
 		c.JSON(http.StatusOK, gin.H{
 			"status":  code,
 			"data":    formData.Username,
@@ -40,7 +60,7 @@ func Login(c *gin.Context){
 }
 
 // LoginFront 前台登录
-func LoginFront(c *gin.Context){
+func LoginFront(c *gin.Context) {
 	var formData model.User
 	_ = c.ShouldBindJSON(&formData)
 	var code int
@@ -58,6 +78,7 @@ func LoginFront(c *gin.Context){
 
 // token生成函数
 func setToken(c *gin.Context, user model.User) {
+	// 自定义请求(公共）参数
 	j := middleware.NewJWT()
 	claims := middleware.MyClaims{
 		Username: user.Username,
@@ -68,8 +89,10 @@ func setToken(c *gin.Context, user model.User) {
 		},
 	}
 
+	// 创建token
 	token, err := j.CreateToken(claims)
 
+	// 容错处理
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"status":  errmsg.ERROR,
@@ -78,7 +101,8 @@ func setToken(c *gin.Context, user model.User) {
 		})
 	}
 
-	c.JSON(http.StatusOK,gin.H{
+	// 返回生成好的token
+	c.JSON(http.StatusOK, gin.H{
 		"status":  200,
 		"data":    user.Username,
 		"id":      user.ID,

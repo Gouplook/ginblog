@@ -69,6 +69,7 @@ func EditUsers(id int, data *User) int {
 	return errmsg.SUCCSE
 }
 
+
 // 删除用户
 func DeleteUser(id int) int {
 	err = db.Where("id=?", id).Delete(&User{}).Error
@@ -117,6 +118,7 @@ func CheckLogin(username string, password string) (User, int) {
 	var PasswordErr error
 
 	db.Where("username= ?", username).First(&user)
+	// 明文密码与数据库中的密文密码对比
 	PasswordErr = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	// _ = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 	if user.ID == 0 {
